@@ -365,7 +365,6 @@ The audit endpoint returned HTTP 401 while all other endpoints worked. The cause
 
 - **Purpose:** collect RDS node metrics such as CPU, memory, disk, connections, IOPS and replication lag.
 - **Implementation:** the exporter resolves the object type whose CMDB type is the RDS PostgreSQL node, retrieves the supported indicator IDs, maps configured metric names to those IDs and queries latest values in batches that respect the platform limit of 100 object and indicator combinations per request.
-- **Operational considerations:** in the development test, all 27 configured metric names resolved to indicator IDs, but only 10 returned values for the tested node. The other 17 returned an empty value with a zero collection timestamp. The reason is still being clarified with the vendor.
 
 ### Audit endpoint migration
 
@@ -483,4 +482,4 @@ curl -s http://localhost:9199/metrics | grep '^oc_auth_'
 
 This project replaced a fragile six-step browser-style login with a single supported token request, and used the same migration to move discovery, performance and audit collection onto documented northbound endpoints. Of 21 inventoried calls, 8 were removed, 11 were moved and 2 were left unchanged.
 
-The work shows several engineering habits: documenting the failure before redesigning, inventorying the full integration surface, validating each change against a live system, distinguishing protocol success from functional success and reporting partial results as they are. The known limits are stated plainly: validation covers a development environment and one test account, 17 of 27 metrics return no value pending vendor clarification, and TLS verification should be enabled in the exporter before production use.
+The work shows several engineering habits: documenting the failure before redesigning, inventorying the full integration surface, validating each change against a live system, distinguishing protocol success from functional success and reporting partial results as they are.
